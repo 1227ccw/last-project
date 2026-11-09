@@ -3,13 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>F1 Real-Time News & Standings</title>
+  <title>F1 Archive & Real-Time News Hub</title>
   <style>
     :root {
       --f1-red: #e10600;
       --f1-dark: #15151e;
       --f1-card-bg: #1f1f2c;
-      --f1-table-bg: #111119;
       --text-white: #ffffff;
       --text-gray: #a1a1a1;
     }
@@ -26,7 +25,6 @@
       font-family: 'Titillium Web', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     }
 
-    /* 헤더 */
     header {
       background-color: #000;
       border-bottom: 4px solid var(--f1-red);
@@ -63,7 +61,6 @@
       100% { opacity: 1; }
     }
 
-    /* 메인 레이아웃 (2열 구성) */
     .container {
       max-width: 1200px;
       margin: 2rem auto;
@@ -87,46 +84,60 @@
       margin-bottom: 1.2rem;
     }
 
-    /* 뉴스 피드 영역 */
+    /* 뉴스 목록 스크롤 디자인 */
     .news-feed {
       display: flex;
       flex-direction: column;
-      gap: 1.5rem;
+      gap: 1.2rem;
+      max-height: 1200px;
+      overflow-y: auto;
+      padding-right: 8px;
+    }
+
+    /* 스크롤바 스타일링 */
+    .news-feed::-webkit-scrollbar {
+      width: 6px;
+    }
+    .news-feed::-webkit-scrollbar-thumb {
+      background-color: var(--f1-red);
+      border-radius: 3px;
+    }
+    .news-feed::-webkit-scrollbar-track {
+      background-color: var(--f1-card-bg);
     }
 
     .news-card {
       background-color: var(--f1-card-bg);
       border-radius: 8px;
-      padding: 1.5rem;
-      border-top: 3px solid transparent;
-      transition: transform 0.2s ease, border-color 0.2s ease;
+      padding: 1.2rem;
+      border-left: 4px solid var(--f1-red);
+      transition: transform 0.2s ease;
     }
 
     .news-card:hover {
-      transform: translateY(-3px);
-      border-color: var(--f1-red);
+      transform: translateX(4px);
     }
 
     .news-tag {
       color: var(--f1-red);
       font-weight: bold;
-      font-size: 0.85rem;
+      font-size: 0.75rem;
       text-transform: uppercase;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.4rem;
     }
 
     .news-title {
-      font-size: 1.3rem;
+      font-size: 1.15rem;
       font-weight: 700;
-      margin-bottom: 0.8rem;
-      line-height: 1.4;
+      margin-bottom: 0.6rem;
+      line-height: 1.3;
     }
 
     .news-summary {
       color: #d1d1d1;
-      font-size: 0.95rem;
-      line-height: 1.6;
-      margin-bottom: 1.2rem;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      margin-bottom: 0.8rem;
     }
 
     .news-footer {
@@ -134,8 +145,8 @@
       justify-content: space-between;
       align-items: center;
       border-top: 1px solid rgba(255, 255, 255, 0.1);
-      padding-top: 0.8rem;
-      font-size: 0.85rem;
+      padding-top: 0.6rem;
+      font-size: 0.8rem;
       color: var(--text-gray);
     }
 
@@ -145,16 +156,13 @@
       font-weight: bold;
     }
 
-    .news-source-link:hover {
-      text-decoration: underline;
-    }
-
-    /* 사이드바 : 챔피언십 인포 데이터 */
     .sidebar-widget {
       background-color: var(--f1-card-bg);
       border-radius: 8px;
       padding: 1.2rem;
       margin-bottom: 1.5rem;
+      position: sticky;
+      top: 1rem;
     }
 
     .widget-title {
@@ -168,18 +176,17 @@
     .standings-table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
     }
 
     .standings-table th, .standings-table td {
-      padding: 0.6rem 0.4rem;
+      padding: 0.5rem 0.3rem;
       text-align: left;
     }
 
     .standings-table th {
       color: var(--text-gray);
-      font-size: 0.75rem;
-      text-transform: uppercase;
+      font-size: 0.7rem;
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
 
@@ -190,7 +197,7 @@
     .standings-table .pos {
       font-weight: bold;
       color: var(--f1-red);
-      width: 30px;
+      width: 25px;
     }
 
     .standings-table .pts {
@@ -211,77 +218,372 @@
 <body>
 
   <header>
-    <div class="logo">F1 <span>LIVE</span> HUB</div>
-    <div class="live-badge">● REALTIME NEWS</div>
+    <div class="logo">F1 <span>ARCHIVE & LIVE</span></div>
+    <div class="live-badge">● 30 ARCHIVED NEWS</div>
   </header>
 
   <div class="container">
-    
-    <!-- 뉴스 영역 (좌측/메인) -->
     <main>
-      <h2 class="section-title">최신 뉴스 & 피처 기사</h2>
+      <h2 class="section-title">F1 주요 기사 & 명장면 아카이브 (30선)</h2>
       
       <div class="news-feed">
-        
-        <!-- 레전드 뉴스: 막스 베르스타펜 브라질 역전극 -->
+
+        <!-- 1 -->
         <article class="news-card">
-          <div class="news-tag">HISTORIC RACE ANALYSIS</div>
-          <h3 class="news-title">막스 베르스타펜, 브라질 GP에서 하위권 출발 후 대역전극… 역대급 빗길 신화 재현</h3>
-          <p class="news-summary">
-            <strong>[요약]</strong><br>
-            - 폭우가 쏟아진 브라질 상파울루 그랑프리에서 막스 베르스타펜이 그리드 후반부(17위~21위)에서 출발했음에도 압도적인 클래스를 선보이며 단숨에 선두권으로 뛰어올랐습니다.<br>
-            - 트랙 위 물웅덩이와 시야 제한 속에서도 수많은 차량을 연속 추월하는 모습은 팬들에게 강렬한 인상을 남겼습니다.<br>
-            - 전문가들은 "과거 챔피언십 결정전 수준의 압도적인 빗길 드라이빙 신화"라며 극찬했습니다.
-          </p>
+          <div class="news-tag">HISTORIC RACE</div>
+          <h3 class="news-title">막스 베르스타펜, 브라질 GP 최하위권 출발 후 압도적 빗길 대역전승</h3>
+          <p class="news-summary">폭우가 내린 상파울루 그랑프리에서 그리드 17위에서 출발한 베르스타펜이 신들린 추월 쇼를 펼치며 결승 우승을 차지했습니다. F1 역대 최고의 빗길 레이싱 중 하나로 평가받습니다.</p>
           <div class="news-footer">
-            <span>브라질 GP 분석</span>
-            <a href="https://www.formula1.com/en/latest.html" target="_blank" class="news-source-link">
-              원문기사 보기 (Formula1.com) &rarr;
-            </a>
+            <span>Brazil Grand Prix</span>
+            <a href="https://www.formula1.com/en/latest.html" target="_blank" class="news-source-link">원문 링크 &rarr;</a>
           </div>
         </article>
 
-        <!-- 일반 뉴스 예시 1 -->
+        <!-- 2 -->
         <article class="news-card">
-          <div class="news-tag">TECHNICAL REPORT</div>
-          <h3 class="news-title">각 팀 2026시즌 차세대 파워유닛 및 에어로 다이내믹 기술 경쟁 본격화</h3>
-          <p class="news-summary">
-            <strong>[요약]</strong><br>
-            - 메르세데스, 페라리, 레드불을 포함한 주요 팩토리 팀들이 차세대 규정 맞춤형 엔진 벤치 테스트를 진행 중입니다.<br>
-            - E-연료(친환경 연료)의 100% 도입과 MGU-K 전력 비중 증대에 따라 차체 드래그 저감 및 에어로 패키지 재설계가 핵심 과제로 떠올랐습니다.
-          </p>
+          <div class="news-tag">CHAMPIONSHIP</div>
+          <h3 class="news-title">맥라렌, 26년 만에 컨스트럭터 챔피언십 타이틀 탈환 성공</h3>
+          <p class="news-summary">랜도 노리스와 오스카 피아스트리의 꾸준한 포디움 입성에 힘입어 맥라렌이 레드불과 페라리를 제치고 마침내 팀 챔피언 자리에 올랐습니다.</p>
           <div class="news-footer">
-            <span>F1 Tech News</span>
-            <a href="https://www.formula1.com/en/latest.html" target="_blank" class="news-source-link">
-              원문기사 보기 (Formula1.com) &rarr;
-            </a>
+            <span>Constructor Title</span>
+            <a href="https://www.formula1.com/en/latest.html" target="_blank" class="news-source-link">원문 링크 &rarr;</a>
           </div>
         </article>
 
-        <!-- 일반 뉴스 예시 2 -->
+        <!-- 3 -->
         <article class="news-card">
-          <div class="news-tag">RACE PREVIEW</div>
-          <h3 class="news-title">시즌 후반부 챔피언십 타이틀 경쟁, 포인트 격차 더욱 좁혀지며 접전 예고</h3>
-          <p class="news-summary">
-            <strong>[요약]</strong><br>
-            - 메르세데스와 페라리의 컨스트럭터 선두 다툼이 치열해지는 가운데, 드라이버 챔피언십 포인트 싸움도 매 경기 요동치고 있습니다.<br>
-            - 피트스탑 타이어 전략과 차체 업데이트 효율성에 따라 남은 레이스의 향방이 결정될 전망입니다.
-          </p>
+          <div class="news-tag">TRANSFER NEWS</div>
+          <h3 class="news-title">루이스 해밀턴의 페라리 이적, F1 역대 최대 규모 이적사 타결</h3>
+          <p class="news-summary">7회 월드 챔피언 해밀턴이 메르세데스를 떠나 페라리의 붉은 수트를 입게 되면서 F1 모터스포츠 역사상 가장 파격적인 이적이 이뤄졌습니다.</p>
           <div class="news-footer">
-            <span>Grand Prix Official</span>
-            <a href="https://www.formula1.com/en/latest.html" target="_blank" class="news-source-link">
-              원문기사 보기 (Formula1.com) &rarr;
-            </a>
+            <span>Driver Market</span>
+            <a href="https://www.formula1.com/en/latest.html" target="_blank" class="news-source-link">원문 링크 &rarr;</a>
+          </div>
+        </article>
+
+        <!-- 4 -->
+        <article class="news-card">
+          <div class="news-tag">ROOKIE IMPACT</div>
+          <h3 class="news-title">올리버 베어만, 데뷔전부터 드라이버 오브 더 데이 선정</h3>
+          <p class="news-summary">사우디아라비아 GP에서 갑작스럽게 출전하게 된 신예 베어만이 페라리 차량으로 7위를 기록하며 유망주로서 강렬한 도장을 찍었습니다.</p>
+          <div class="news-footer">
+            <span>Rookie News</span>
+            <a href="https://www.formula1.com/en/latest.html" target="_blank" class="news-source-link">원문 링크 &rarr;</a>
+          </div>
+        </article>
+
+        <!-- 5 -->
+        <article class="news-card">
+          <div class="news-tag">HOME HERO</div>
+          <h3 class="news-title">샤를르 클레르, 마침내 '모나코 저주' 깨고 홈 그랑프리 우승</h3>
+          <p class="news-summary">모나코 출신 클레르가 몬테카를로 서킷에서 폴투윈을 달성하며 오랜 징크스를 털어내고 고국 팬들 앞에서 우승컵을 들어 올렸습니다.</p>
+          <div class="news-footer">
+            <span>Monaco GP</span>
+            <a href="https://www.formula1.com/en/latest.html" target="_blank" class="news-source-link">원문 링크 &rarr;</a>
+          </div>
+        </article>
+
+        <!-- 6 -->
+        <article class="news-card">
+          <div class="news-tag">FIRST WIN</div>
+          <h3 class="news-title">랜도 노리스, 마이애미 GP에서 마침내 F1 첫 커리어 승리 달성</h3>
+          <p class="news-summary">110번의 레이스 끝에 노리스가 마이애미 서킷에서 세이프티카 타이밍과 완벽한 페이스를 활용해 베르스타펜을 제치고 데뷔 첫 우승을 차지했습니다.</p>
+          <div class="news-footer">
+            <span>Miami GP</span>
+            <a href="https://www.formula1.com/en/latest.html" target="_blank" class="news-source-link">원문 링크 &rarr;</a>
+          </div>
+        </article>
+
+        <!-- 7 -->
+        <article class="news-card">
+          <div class="news-tag">FIRST WIN</div>
+          <h3 class="news-title">오스카 피아스트리, 헝가리 GP에서 커리어 첫 그랑프리 우승</h3>
+          <p class="news-summary">팀 오더 이슈 속에서도 경기 내내 안정적인 주행을 선보인 피아스트리가 헝가로링에서 F1 개인 통산 첫승을 달성했습니다.</p>
+          <div class="news-footer">
+            <span>Hungarian GP</span>
+            <a href="https://www.formula1.com/en/latest.html" target="_blank" class="news-source-link">원문 링크 &rarr;</a>
+          </div>
+        </article>
+
+        <!-- 8 -->
+        <article class="news-card">
+          <div class="news-tag">EMOTIONAL WIN</div>
+          <h3 class="news-title">루이스 해밀턴, 945일 만에 실버스톤 홈그라운드에서 104승 달성</h3>
+          <p class="news-summary">긴 우승 가뭄을 깨고 영국 GP에서 가슴 뭉클한 승리를 챙긴 해밀턴은 단일 서킷 최다 우승 기록(9회)을 갱신했습니다.</p>
+          <div class="news-footer">
+            <span>British GP</span>
+            <a href="https://www.formula1.com/en/latest.html" target="_blank" class="news-source-link">원문 링크 &rarr;</a>
+          </div>
+        </article>
+
+        <!-- 9 -->
+        <article class="news-card">
+          <div class="news-tag">TECHNICAL REGULATION</div>
+          <h3 class="news-title">FIA, 2026시즌 차세대 규정 공개: 액티브 에어로다이내믹 도입</h3>
+          <p class="news-summary">더 작고 가벼워진 차체와 직선 구간에서 공기저항을 줄여주는 가변 날개 기술(Active Aerodynamics)이 2026년부터 전면 적용됩니다.</p>
+          <div class="news-footer">
+            <span>FIA Regulations</span>
+            <a href="https://www.formula1.com/en/latest.html" target="_blank" class="news-source-link">원문 링크 &rarr;</a>
+          </div>
+        </article>
+
+        <!-- 10 -->
+        <article class="news-card">
+          <div class="news-tag">NEW ENGINE</div>
+          <h3 class="news-title">2026 파워유닛: 100% 지속가능한 E-연료와 전기 모터 출력 300% 증가</h3>
+          <p class="news-summary">기존 MGU-H가 폐지되고 전기 모터(MGU-K)의 출력이 350kW로 대폭 늘어나 친환경적이면서도 강력한 출력을 구현합니다.</p>
+
+          <div class="news-footer">
+            <span>Tech Update</span>
+            <a href="https://www.formula1.com/en/latest.html" target="_blank" class="news-source-link">원문 링크 &rarr;</a>
+          </div>
+        </article>
+
+        <!-- 11 -->
+        <article class="news-card">
+          <div class="news-tag">DRIVER MARKET</div>
+          <h3 class="news-title">키미 안토넬리, 2025시즌 메르세데스 시트 확정 발표</h3>
+          <p class="news-summary">메르세데스가 이탈리아의 siêu 유망주 안토넬리를 루이스 해밀턴의 후임으로 지목하며 파격적인 드라이버 라인업을 완성했습니다.</p>
+
+          <div class="news-footer">
+            <span>Mercedes AMG</span>
+            <a href="https://www.formula1.com/en/latest.html" target="_blank" class="news-source-link">원문 링크 &rarr;</a>
+          </div>
+        </article>
+
+        <!-- 12 -->
+        <article class="news-card">
+          <div class="news-tag">TEAM ENTRY</div>
+          <h3 class="news-title">아우디(Audi), 자우버(Sauber) 인수 완료하며 2026 F1 공식 참전 준비</h3>
+          <p class="news-summary">독일 완성차 브랜드 아우디가 자우버 지분을 100% 인수하며 2026년부터 아우디 팩토리 팀으로 F1 무대에 도전합니다.</p>
+
+          <div class="news-footer">
+            <span>Audi F1 Team</span>
+            <a href="https://www.formula1.com/en/latest.html" target="_blank" class="news-source-link">원문 링크 &rarr;</a>
+          </div>
+        </article>
+
+        <!-- 13 -->
+        <article class="news-card">
+          <div class="news-tag">DESIGNER MOVE</div>
+          <h3 class="news-title">천재 디자이너 아드리안 뉴이, 애스턴 마틴으로 전격 이적</h3>
+          <p class="news-summary">레드불 머신의 압도적인 공기역학을 완성했던 아드리안 뉴이가 애스턴 마틴의 기술 총괄로 합류하며 2026 머신 개발을 이끕니다.</p>
+
+          <div class="news-footer">
+            <span>Paddock News</span>
+            <a href="https://www.formula1.com/en/latest.html" target="_blank" class="news-source-link">원문 링크 &rarr;</a>
+          </div>
+        </article>
+
+        <!-- 14 -->
+        <article class="news-card">
+          <div class="news-tag">MONARCH OF MONZA</div>
+          <h3 class="news-title">샤를르 클레르, 몬자 서킷 원스탑 전략으로 페라리 팬들에게 우승 선물</h3>
+          <p class="news-summary">이탈리아 몬자에서 타이어를 극한으로 관리하는 1스탑 전략을 성공시키며 맥라렌을 제치고 드라마틱하게 정상에 올랐습니다.</p>
+
+          <div class="news-footer">
+            <span>Italian GP</span>
+            <a href="https://www.formula1.com/en/latest.html" target="_blank" class="news-source-link">원문 링크 &rarr;</a>
+          </div>
+        </article>
+
+        <!-- 15 -->
+        <article class="news-card">
+          <div class="news-tag">QUALIFYING SHOCK</div>
+          <h3 class="news-title">하스(Haas), 빗길 퀄리파잉에서 파격적 셋업으로 상위권 깜짝 입성</h3>
+          <p class="news-summary">변덕스러운 날씨 속 웨트 타이어 교체 타이밍을 극대화한 하스 팀이 퀄리파잉 TOP 5에 이름을 올리는 기염을 토했습니다.</p>
+
+          <div class="news-footer">
+            <span>Qualifying Flash</span>
+            <a href="https://www.formula1.com/en/latest.html" target="_blank" class="news-source-link">원문 링크 &rarr;</a>
+          </div>
+        </article>
+
+        <!-- 16 -->
+        <article class="news-card">
+          <div class="news-tag">NIGHT RACE</div>
+          <h3 class="news-title">라스베이거스 GP, 화려한 조명 속 스트리트 레이스 대성황</h3>
+          <p class="news-summary">시가지를 가로지르는 롱 스트레이트 구간에서 시속 340km를 넘나드는 치열한 추월전이 펼쳐졌습니다.</p>
+
+          <div class="news-footer">
+            <span>Las Vegas GP</span>
+            <a href="https://www.formula1.com/en/latest.html" target="_blank" class="news-source-link">원문 링크 &rarr;</a>
+          </div>
+        </article>
+
+        <!-- 17 -->
+        <article class="news-card">
+          <div class="news-tag">PIT STOP RECORD</div>
+          <h3 class="news-title">레드불 레이싱, 1.80초 피트스탑으로 사상 경악스러운 타이어 교체</h3>
+          <p class="news-summary">피트 크루들의 완벽한 호흡으로 타이어 4개를 1.8초 만에 교체하며 세계 신기록 부문에 다시 한번 이름을 올렸습니다.</p>
+
+          <div class="news-footer">
+            <span>Pit Stop Record</span>
+            <a href="https://www.formula1.com/en/latest.html" target="_blank" class="news-source-link">원문 링크 &rarr;</a>
+          </div>
+        </article>
+
+        <!-- 18 -->
+        <article class="news-card">
+          <div class="news-tag">SPRINT RACE</div>
+          <h3 class="news-title">스프린트 포맷 개정: 팬들에게 더 많은 배틀과 포인트 기회 제공</h3>
+          <p class="news-summary">금요일 파크페르메 규정 완화와 함께 퀄리파잉 및 스프린트 일정이 정돈되어 드라이버들의 공격적 주행이 늘어났습니다.</p>
+
+          <div class="news-footer">
+            <span>Sprint Format</span>
+            <a href="https://www.formula1.com/en/latest.html" target="_blank" class="news-source-link">원문 링크 &rarr;</a>
+          </div>
+        </article>
+
+        <!-- 19 -->
+        <article class="news-card">
+          <div class="news-tag">CALENDAR EXPANSE</div>
+          <h3 class="news-title">2026시즌 24개 라운드 역대 최대 규모 일정 확정</h3>
+          <p class="news-summary">지속 가능한 이송 동선을 고려해 물류 에너지를 줄이는 방향으로 전 세계 24개 그리드가 확정되었습니다.</p>
+
+          <div class="news-footer">
+            <span>F1 Calendar</span>
+            <a href="https://www.formula1.com/en/latest.html" target="_blank" class="news-source-link">원문 링크 &rarr;</a>
+          </div>
+        </article>
+
+        <!-- 20 -->
+        <article class="news-card">
+          <div class="news-tag">SPANISH GP</div>
+          <h3 class="news-title">마드리드 시가지 서킷, 2026년부터 스페인 그랑프리 신규 개최</h3>
+          <p class="news-summary">스페인 마드리드의 신규 서킷이 F1 일정을 공식 사수하면서 차세대 스트리트 서킷의 탄생을 예고했습니다.</p>
+
+          <div class="news-footer">
+            <span>Circuit Update</span>
+            <a href="https://www.formula1.com/en/latest.html" target="_blank" class="news-source-link">원문 링크 &rarr;</a>
+          </div>
+        </article>
+
+        <!-- 21 -->
+        <article class="news-card">
+          <div class="news-tag">HONDA RETURN</div>
+          <h3 class="news-title">혼다(Honda), 2026년부터 애스턴 마틴과 독점 엔진 파트너십 결성</h3>
+          <p class="news-summary">혼다가 2026년 정식 워크스 엔진 공급업체로 복귀하며 애스턴 마틴 레이싱과 손을 잡았습니다.</p>
+
+          <div class="news-footer">
+            <span>Engine Supplier</span>
+            <a href="https://www.formula1.com/en/latest.html" target="_blank" class="news-source-link">원문 링크 &rarr;</a>
+          </div>
+        </article>
+
+        <!-- 22 -->
+        <article class="news-card">
+          <div class="news-tag">FORD PARTNERSHIP</div>
+          <h3 class="news-title">포드(Ford), 레드불 파워트레인스와 손잡고 F1 무대 복귀</h3>
+          <p class="news-summary">미국의 자동차 거인 포드가 레드불 파워트레인스와 함께 2026 파워유닛 공동 개발에 박차를 가하고 있습니다.</p>
+
+          <div class="news-footer">
+            <span>Red Bull Ford</span>
+            <a href="https://www.formula1.com/en/latest.html" target="_blank" class="news-source-link">원문 링크 &rarr;</a>
+          </div>
+        </article>
+
+        <!-- 23 -->
+        <article class="news-card">
+          <div class="news-tag">TYRE STRATEGY</div>
+          <h3 class="news-title">피렐리(Pirelli), 2026년형 18인치 로우 프로파일 타이어 개선 테스트</h3>
+          <p class="news-summary">차체 경량화 및 신규 에어로 규정에 맞춰 그립력 향상과 과열 현상을 줄인 새로운 콤파운드가 시험대에 올랐습니다.</p>
+
+          <div class="news-footer">
+            <span>Pirelli Tyre</span>
+            <a href="https://www.formula1.com/en/latest.html" target="_blank" class="news-source-link">원문 링크 &rarr;</a>
+          </div>
+        </article>
+
+        <!-- 24 -->
+        <article class="news-card">
+          <div class="news-tag">SAFETY FIRST</div>
+          <h3 class="news-title">FIA, 머신 롤후프 및 헤일로(Halo) 강도 규정 추가 강화</h3>
+          <p class="news-summary">충돌 시 드라이버 안전을 극대화하기 위해 롤후프 충격 테스트 기준을 상향 조정한 신규 안전 규정이 승인되었습니다.</p>
+
+          <div class="news-footer">
+            <span>Safety Regulation</span>
+            <a href="https://www.formula1.com/en/latest.html" target="_blank" class="news-source-link">원문 링크 &rarr;</a>
+          </div>
+        </article>
+
+        <!-- 25 -->
+        <article class="news-card">
+          <div class="news-tag">ROOKIE PODIUM</div>
+          <h3 class="news-title">리암 로슨, RB(Racing Bulls) 레이스 시트에서 포인트를 획득하며 존재감 입증</h3>
+          <p class="news-summary">대체 드라이버로 투입된 로슨이 뛰어난 레이스 페이스로 포인트를 수확하며 정규 시트 경쟁에서 우위를 점했습니다.</p>
+
+          <div class="news-footer">
+            <span>RB Racing</span>
+            <a href="https://www.formula1.com/en/latest.html" target="_blank" class="news-source-link">원문 링크 &rarr;</a>
+          </div>
+        </article>
+
+        <!-- 26 -->
+        <article class="news-card">
+          <div class="news-tag">JAPANESE GP</div>
+          <h3 class="news-title">스즈카 서킷, 벚꽃 시즌 춘계 레이스로 성공적 전환</h3>
+          <p class="news-summary">가을에서 봄 일정으로 변경된 스즈카 GP가 벚꽃 배경 속에서 세계 수많은 팬들의 호평을 받았습니다.</p>
+
+          <div class="news-footer">
+            <span>Japanese GP</span>
+            <a href="https://www.formula1.com/en/latest.html" target="_blank" class="news-source-link">원문 링크 &rarr;</a>
+          </div>
+        </article>
+
+        <!-- 27 -->
+        <article class="news-card">
+          <div class="news-tag">COST CAP</div>
+          <h3 class="news-title">예산 캡(Cost Cap) 규정 정착으로 각 팀 간 성능 격차 감소 효과</h3>
+          <p class="news-summary">팀 간 지출 제한 정책이 효과를 보이며 선두권과 중위권 간의 퀄리파잉 랩타임 차이가 1초 이내로 대폭 줄어들었습니다.</p>
+
+          <div class="news-footer">
+            <span>Financial Rules</span>
+            <a href="https://www.formula1.com/en/latest.html" target="_blank" class="news-source-link">원문 링크 &rarr;</a>
+          </div>
+        </article>
+
+        <!-- 28 -->
+        <article class="news-card">
+          <div class="news-tag">ALPIN REBOUND</div>
+          <h3 class="news-title">알핀(Alpine), 브라질 GP 더블 포디움 기적 달성</h3>
+          <p class="news-summary">에스테반 오콘과 피에르 가슬리가 빗길 속 놀라운 드라이빙으로 2위, 3위를 휩쓸며 팀 순위를 단번에 뒤집었습니다.</p>
+
+          <div class="news-footer">
+            <span>Alpine F1</span>
+            <a href="https://www.formula1.com/en/latest.html" target="_blank" class="news-source-link">원문 링크 &rarr;</a>
+          </div>
+        </article>
+
+        <!-- 29 -->
+        <article class="news-card">
+          <div class="news-tag">WILLIAMS RESURGENCE</div>
+          <h3 class="news-title">윌리엄스, 알렉스 알본 중심의 차체 업그레이드로 중위권 선두 도약</h3>
+          <p class="news-summary">새로운 고속 서킷용 다운포스 패키지가 제 성능을 내면서 윌리엄스가 꾸준히 Q3에 진출하고 있습니다.</p>
+
+          <div class="news-footer">
+            <span>Williams Racing</span>
+            <a href="https://www.formula1.com/en/latest.html" target="_blank" class="news-source-link">원문 링크 &rarr;</a>
+          </div>
+        </article>
+
+        <!-- 30 -->
+        <article class="news-card">
+          <div class="news-tag">NET ZERO 2030</div>
+          <h3 class="news-title">F1, 2030년까지 '탄소 중립(Net-Zero)' 달성 로드맵 진행 순항</h3>
+          <p class="news-summary">100% 재생 에너지 운송 및 순환형 이벤트 운영을 통해 친환경 모터스포츠 선두주자로 거듭나고 있습니다.</p>
+
+          <div class="news-footer">
+            <span>Sustainability</span>
+            <a href="https://www.formula1.com/en/latest.html" target="_blank" class="news-source-link">원문 링크 &rarr;</a>
           </div>
         </article>
 
       </div>
     </main>
 
-    <!-- 사이드바: 챔피언십 순위 정보 (우측) -->
+    <!-- 우측 사이드바: 챔피언십 순위 -->
     <aside>
-      
-      <!-- 드라이버 챔피언십 순위 -->
       <div class="sidebar-widget">
         <h3 class="widget-title">🏆 DRIVER STANDINGS</h3>
         <table class="standings-table">
@@ -293,41 +595,16 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td class="pos">1</td>
-              <td>K. Antonelli (Mercedes)</td>
-              <td class="pts">390</td>
-            </tr>
-            <tr>
-              <td class="pos">2</td>
-              <td>M. Verstappen (Red Bull)</td>
-              <td class="pts">279</td>
-            </tr>
-            <tr>
-              <td class="pos">3</td>
-              <td>G. Russell (Mercedes)</td>
-              <td class="pts">262</td>
-            </tr>
-            <tr>
-              <td class="pos">4</td>
-              <td>L. Hamilton (Ferrari)</td>
-              <td class="pts">261</td>
-            </tr>
-            <tr>
-              <td class="pos">5</td>
-              <td>C. Leclerc (Ferrari)</td>
-              <td class="pts">251</td>
-            </tr>
-            <tr>
-              <td class="pos">6</td>
-              <td>L. Norris (McLaren)</td>
-              <td class="pts">246</td>
-            </tr>
+            <tr><td class="pos">1</td><td>K. Antonelli (Mercedes)</td><td class="pts">390</td></tr>
+            <tr><td class="pos">2</td><td>M. Verstappen (Red Bull)</td><td class="pts">279</td></tr>
+            <tr><td class="pos">3</td><td>G. Russell (Mercedes)</td><td class="pts">262</td></tr>
+            <tr><td class="pos">4</td><td>L. Hamilton (Ferrari)</td><td class="pts">261</td></tr>
+            <tr><td class="pos">5</td><td>C. Leclerc (Ferrari)</td><td class="pts">251</td></tr>
+            <tr><td class="pos">6</td><td>L. Norris (McLaren)</td><td class="pts">246</td></tr>
           </tbody>
         </table>
       </div>
 
-      <!-- 컨스트럭터 챔피언십 순위 -->
       <div class="sidebar-widget">
         <h3 class="widget-title">🏎️ CONSTRUCTORS</h3>
         <table class="standings-table">
@@ -339,35 +616,14 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td class="pos">1</td>
-              <td>Mercedes</td>
-              <td class="pts">652</td>
-            </tr>
-            <tr>
-              <td class="pos">2</td>
-              <td>Ferrari</td>
-              <td class="pts">512</td>
-            </tr>
-            <tr>
-              <td class="pos">3</td>
-              <td>Red Bull Racing</td>
-              <td class="pts">415</td>
-            </tr>
-            <tr>
-              <td class="pos">4</td>
-              <td>McLaren</td>
-              <td class="pts">398</td>
-            </tr>
-            <tr>
-              <td class="pos">5</td>
-              <td>Racing Bulls</td>
-              <td class="pts">112</td>
-            </tr>
+            <tr><td class="pos">1</td><td>Mercedes</td><td class="pts">652</td></tr>
+            <tr><td class="pos">2</td><td>Ferrari</td><td class="pts">512</td></tr>
+            <tr><td class="pos">3</td><td>Red Bull Racing</td><td class="pts">415</td></tr>
+            <tr><td class="pos">4</td><td>McLaren</td><td class="pts">398</td></tr>
+            <tr><td class="pos">5</td><td>Racing Bulls</td><td class="pts">112</td></tr>
           </tbody>
         </table>
       </div>
-
     </aside>
 
   </div>
