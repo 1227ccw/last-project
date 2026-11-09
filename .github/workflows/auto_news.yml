@@ -1,0 +1,28 @@
+name: Auto F1 News Updater
+
+on:
+  schedule:
+    - cron: '*/10 * * * *' # 10분마다 자동으로 실행
+  workflow_dispatch: # 수동으로도 즉시 실행 가능하도록 설정
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 저장소 코드 가져오기
+        uses: actions/checkout@v3
+
+      - name: 파이썬 환경 설정
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: 뉴스 수집 스크립트 실행
+        run: python update_news.py
+
+      - name: 변경된 뉴스 저장 및 깃허브에 반영
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add index.html
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto update F1 news" && git push)
