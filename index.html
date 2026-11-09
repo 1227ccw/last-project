@@ -1,1 +1,211 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>F1 Real-Time News</title>
+  <style>
+    :root {
+      --f1-red: #e10600;
+      --f1-dark: #15151e;
+      --f1-card-bg: #1f1f2c;
+      --text-white: #ffffff;
+      --text-gray: #a1a1a1;
+    }
 
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--f1-dark);
+      color: var(--text-white);
+      font-family: 'Titillium Web', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    /* 헤더 디자인 */
+    header {
+      background-color: #000;
+      border-bottom: 4px solid var(--f1-red);
+      padding: 1.5rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 900;
+      font-style: italic;
+      color: var(--text-white);
+      letter-spacing: -1px;
+    }
+
+    .logo span {
+      color: var(--f1-red);
+    }
+
+    .live-badge {
+      background-color: var(--f1-red);
+      color: white;
+      padding: 0.3rem 0.8rem;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      font-weight: bold;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 1; }
+      50% { opacity: 0.5; }
+      100% { opacity: 1; }
+    }
+
+    /* 메인 컨테이너 */
+    .container {
+      max-width: 1000px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+      text-transform: uppercase;
+      border-left: 4px solid var(--f1-red);
+      padding-left: 0.8rem;
+      margin-bottom: 1.5rem;
+    }
+
+    /* 뉴스 카드 피드 */
+    .news-feed {
+      display: grid;
+      gap: 1.5rem;
+    }
+
+    .news-card {
+      background-color: var(--f1-card-bg);
+      border-radius: 8px;
+      padding: 1.5rem;
+      border-top: 2px solid transparent;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .news-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--f1-red);
+    }
+
+    .news-tag {
+      color: var(--f1-red);
+      font-weight: bold;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .news-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 0.8rem;
+      line-height: 1.4;
+    }
+
+    .news-summary {
+      color: #d1d1d1;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin-bottom: 1.2rem;
+    }
+
+    .news-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 0.8rem;
+      font-size: 0.85rem;
+      color: var(--text-gray);
+    }
+
+    .news-source-link {
+      color: var(--f1-red);
+      text-decoration: none;
+      font-weight: bold;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .news-source-link:hover {
+      text-decoration: underline;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      color: var(--text-gray);
+      font-size: 0.8rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      margin-top: 3rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">F1 <span>LIVE</span> NEWS</div>
+    <div class="live-badge">● REALTIME UPDATE</div>
+  </header>
+
+  <div class="container">
+    <h2 class="section-title">최신 뉴스 요약</h2>
+    
+    <div class="news-feed">
+      
+      <!-- 뉴스 카드 예시 1 -->
+      <article class="news-card">
+        <div class="news-tag">BREAKING NEWS</div>
+        <h3 class="news-title">페라리, 2026시즌 차세대 파워유닛 테스트 성공적 완료</h3>
+        <p class="news-summary">
+          <strong>[3줄 요약]</strong><br>
+          1. 페라리가 마라넬로 본사에서 2026 규정에 맞춘 차세대 파워유닛 벤치 테스트를 마쳤습니다.<br>
+          2. E-원료 사용 비율 확대 및 전력 출력 비중 증가에 초점을 맞춘 이번 테스트는 목표치를 달성했습니다.<br>
+          3. 엔지니어링 팀은 이번 결과를 바탕으로 차체 공력 테스트 단계로 진입할 예정입니다.
+        </p>
+        <div class="news-footer">
+          <span>작성일: 2026-11-09</span>
+          <a href="https://www.formula1.com/en/latest.html" target="_blank" class="news-source-link">
+            원문 기사 보러가기 (Formula1.com) &rarr;
+          </a>
+        </div>
+      </article>
+
+      <!-- 뉴스 카드 예시 2 -->
+      <article class="news-card">
+        <div class="news-tag">RACE RECAP</div>
+        <h3 class="news-title">맥라렌, 피트스탑 전략 성공으로 다이내믹한 1-2 피니시 달성</h3>
+        <p class="news-summary">
+          <strong>[3줄 요약]</strong><br>
+          1. 맥라렌이 언더컷 전략을 성공시키며 경쟁팀을 제치고 원투 피니시를 기록했습니다.<br>
+          2. 타이어 마모 관리가 승패의 핵심 요소로 작용했으며, 후반부 페이스 유지가 뛰어났습니다.<br>
+          3. 컨스트럭터 챔피언십 포인트 격차를 더욱 벌리며 선두 자리를 견고히 지켰습니다.
+        </p>
+        <div class="news-footer">
+          <span>작성일: 2026-11-08</span>
+          <a href="https://www.formula1.com/en/latest.html" target="_blank" class="news-source-link">
+            원문 기사 보러가기 (Formula1.com) &rarr;
+          </a>
+        </div>
+      </article>
+
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2026 F1 News Hub. Independent fan website for Formula 1 news summary.</p>
+  </footer>
+
+</body>
+</html>
