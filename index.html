@@ -3,12 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>F1 Real-Time News</title>
+  <title>F1 Real-Time News & Standings</title>
   <style>
     :root {
       --f1-red: #e10600;
       --f1-dark: #15151e;
       --f1-card-bg: #1f1f2c;
+      --f1-table-bg: #111119;
       --text-white: #ffffff;
       --text-gray: #a1a1a1;
     }
@@ -25,7 +26,7 @@
       font-family: 'Titillium Web', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     }
 
-    /* 헤더 디자인 */
+    /* 헤더 */
     header {
       background-color: #000;
       border-bottom: 4px solid var(--f1-red);
@@ -39,7 +40,6 @@
       font-size: 1.8rem;
       font-weight: 900;
       font-style: italic;
-      color: var(--text-white);
       letter-spacing: -1px;
     }
 
@@ -63,24 +63,34 @@
       100% { opacity: 1; }
     }
 
-    /* 메인 컨테이너 */
+    /* 메인 레이아웃 (2열 구성) */
     .container {
-      max-width: 1000px;
+      max-width: 1200px;
       margin: 2rem auto;
       padding: 0 1rem;
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 2rem;
+    }
+
+    @media (max-width: 850px) {
+      .container {
+        grid-template-columns: 1fr;
+      }
     }
 
     .section-title {
-      font-size: 1.5rem;
+      font-size: 1.4rem;
       text-transform: uppercase;
       border-left: 4px solid var(--f1-red);
       padding-left: 0.8rem;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.2rem;
     }
 
-    /* 뉴스 카드 피드 */
+    /* 뉴스 피드 영역 */
     .news-feed {
-      display: grid;
+      display: flex;
+      flex-direction: column;
       gap: 1.5rem;
     }
 
@@ -88,7 +98,7 @@
       background-color: var(--f1-card-bg);
       border-radius: 8px;
       padding: 1.5rem;
-      border-top: 2px solid transparent;
+      border-top: 3px solid transparent;
       transition: transform 0.2s ease, border-color 0.2s ease;
     }
 
@@ -133,13 +143,59 @@
       color: var(--f1-red);
       text-decoration: none;
       font-weight: bold;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
     }
 
     .news-source-link:hover {
       text-decoration: underline;
+    }
+
+    /* 사이드바 : 챔피언십 인포 데이터 */
+    .sidebar-widget {
+      background-color: var(--f1-card-bg);
+      border-radius: 8px;
+      padding: 1.2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .widget-title {
+      font-size: 1.1rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 2px solid var(--f1-red);
+    }
+
+    .standings-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+
+    .standings-table th, .standings-table td {
+      padding: 0.6rem 0.4rem;
+      text-align: left;
+    }
+
+    .standings-table th {
+      color: var(--text-gray);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .standings-table tr {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .standings-table .pos {
+      font-weight: bold;
+      color: var(--f1-red);
+      width: 30px;
+    }
+
+    .standings-table .pts {
+      text-align: right;
+      font-weight: bold;
     }
 
     footer {
@@ -155,56 +211,169 @@
 <body>
 
   <header>
-    <div class="logo">F1 <span>LIVE</span> NEWS</div>
-    <div class="live-badge">● REALTIME UPDATE</div>
+    <div class="logo">F1 <span>LIVE</span> HUB</div>
+    <div class="live-badge">● REALTIME NEWS</div>
   </header>
 
   <div class="container">
-    <h2 class="section-title">최신 뉴스 요약</h2>
     
-    <div class="news-feed">
+    <!-- 뉴스 영역 (좌측/메인) -->
+    <main>
+      <h2 class="section-title">최신 뉴스 & 피처 기사</h2>
       
-      <!-- 뉴스 카드 예시 1 -->
-      <article class="news-card">
-        <div class="news-tag">BREAKING NEWS</div>
-        <h3 class="news-title">페라리, 2026시즌 차세대 파워유닛 테스트 성공적 완료</h3>
-        <p class="news-summary">
-          <strong>[3줄 요약]</strong><br>
-          1. 페라리가 마라넬로 본사에서 2026 규정에 맞춘 차세대 파워유닛 벤치 테스트를 마쳤습니다.<br>
-          2. E-원료 사용 비율 확대 및 전력 출력 비중 증가에 초점을 맞춘 이번 테스트는 목표치를 달성했습니다.<br>
-          3. 엔지니어링 팀은 이번 결과를 바탕으로 차체 공력 테스트 단계로 진입할 예정입니다.
-        </p>
-        <div class="news-footer">
-          <span>작성일: 2026-11-09</span>
-          <a href="https://www.formula1.com/en/latest.html" target="_blank" class="news-source-link">
-            원문 기사 보러가기 (Formula1.com) &rarr;
-          </a>
-        </div>
-      </article>
+      <div class="news-feed">
+        
+        <!-- 레전드 뉴스: 막스 베르스타펜 브라질 역전극 -->
+        <article class="news-card">
+          <div class="news-tag">HISTORIC RACE ANALYSIS</div>
+          <h3 class="news-title">막스 베르스타펜, 브라질 GP에서 하위권 출발 후 대역전극… 역대급 빗길 신화 재현</h3>
+          <p class="news-summary">
+            <strong>[요약]</strong><br>
+            - 폭우가 쏟아진 브라질 상파울루 그랑프리에서 막스 베르스타펜이 그리드 후반부(17위~21위)에서 출발했음에도 압도적인 클래스를 선보이며 단숨에 선두권으로 뛰어올랐습니다.<br>
+            - 트랙 위 물웅덩이와 시야 제한 속에서도 수많은 차량을 연속 추월하는 모습은 팬들에게 강렬한 인상을 남겼습니다.<br>
+            - 전문가들은 "과거 챔피언십 결정전 수준의 압도적인 빗길 드라이빙 신화"라며 극찬했습니다.
+          </p>
+          <div class="news-footer">
+            <span>브라질 GP 분석</span>
+            <a href="https://www.formula1.com/en/latest.html" target="_blank" class="news-source-link">
+              원문기사 보기 (Formula1.com) &rarr;
+            </a>
+          </div>
+        </article>
 
-      <!-- 뉴스 카드 예시 2 -->
-      <article class="news-card">
-        <div class="news-tag">RACE RECAP</div>
-        <h3 class="news-title">맥라렌, 피트스탑 전략 성공으로 다이내믹한 1-2 피니시 달성</h3>
-        <p class="news-summary">
-          <strong>[3줄 요약]</strong><br>
-          1. 맥라렌이 언더컷 전략을 성공시키며 경쟁팀을 제치고 원투 피니시를 기록했습니다.<br>
-          2. 타이어 마모 관리가 승패의 핵심 요소로 작용했으며, 후반부 페이스 유지가 뛰어났습니다.<br>
-          3. 컨스트럭터 챔피언십 포인트 격차를 더욱 벌리며 선두 자리를 견고히 지켰습니다.
-        </p>
-        <div class="news-footer">
-          <span>작성일: 2026-11-08</span>
-          <a href="https://www.formula1.com/en/latest.html" target="_blank" class="news-source-link">
-            원문 기사 보러가기 (Formula1.com) &rarr;
-          </a>
-        </div>
-      </article>
+        <!-- 일반 뉴스 예시 1 -->
+        <article class="news-card">
+          <div class="news-tag">TECHNICAL REPORT</div>
+          <h3 class="news-title">각 팀 2026시즌 차세대 파워유닛 및 에어로 다이내믹 기술 경쟁 본격화</h3>
+          <p class="news-summary">
+            <strong>[요약]</strong><br>
+            - 메르세데스, 페라리, 레드불을 포함한 주요 팩토리 팀들이 차세대 규정 맞춤형 엔진 벤치 테스트를 진행 중입니다.<br>
+            - E-연료(친환경 연료)의 100% 도입과 MGU-K 전력 비중 증대에 따라 차체 드래그 저감 및 에어로 패키지 재설계가 핵심 과제로 떠올랐습니다.
+          </p>
+          <div class="news-footer">
+            <span>F1 Tech News</span>
+            <a href="https://www.formula1.com/en/latest.html" target="_blank" class="news-source-link">
+              원문기사 보기 (Formula1.com) &rarr;
+            </a>
+          </div>
+        </article>
 
-    </div>
+        <!-- 일반 뉴스 예시 2 -->
+        <article class="news-card">
+          <div class="news-tag">RACE PREVIEW</div>
+          <h3 class="news-title">시즌 후반부 챔피언십 타이틀 경쟁, 포인트 격차 더욱 좁혀지며 접전 예고</h3>
+          <p class="news-summary">
+            <strong>[요약]</strong><br>
+            - 메르세데스와 페라리의 컨스트럭터 선두 다툼이 치열해지는 가운데, 드라이버 챔피언십 포인트 싸움도 매 경기 요동치고 있습니다.<br>
+            - 피트스탑 타이어 전략과 차체 업데이트 효율성에 따라 남은 레이스의 향방이 결정될 전망입니다.
+          </p>
+          <div class="news-footer">
+            <span>Grand Prix Official</span>
+            <a href="https://www.formula1.com/en/latest.html" target="_blank" class="news-source-link">
+              원문기사 보기 (Formula1.com) &rarr;
+            </a>
+          </div>
+        </article>
+
+      </div>
+    </main>
+
+    <!-- 사이드바: 챔피언십 순위 정보 (우측) -->
+    <aside>
+      
+      <!-- 드라이버 챔피언십 순위 -->
+      <div class="sidebar-widget">
+        <h3 class="widget-title">🏆 DRIVER STANDINGS</h3>
+        <table class="standings-table">
+          <thead>
+            <tr>
+              <th>POS</th>
+              <th>DRIVER</th>
+              <th style="text-align: right;">PTS</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="pos">1</td>
+              <td>K. Antonelli (Mercedes)</td>
+              <td class="pts">390</td>
+            </tr>
+            <tr>
+              <td class="pos">2</td>
+              <td>M. Verstappen (Red Bull)</td>
+              <td class="pts">279</td>
+            </tr>
+            <tr>
+              <td class="pos">3</td>
+              <td>G. Russell (Mercedes)</td>
+              <td class="pts">262</td>
+            </tr>
+            <tr>
+              <td class="pos">4</td>
+              <td>L. Hamilton (Ferrari)</td>
+              <td class="pts">261</td>
+            </tr>
+            <tr>
+              <td class="pos">5</td>
+              <td>C. Leclerc (Ferrari)</td>
+              <td class="pts">251</td>
+            </tr>
+            <tr>
+              <td class="pos">6</td>
+              <td>L. Norris (McLaren)</td>
+              <td class="pts">246</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- 컨스트럭터 챔피언십 순위 -->
+      <div class="sidebar-widget">
+        <h3 class="widget-title">🏎️ CONSTRUCTORS</h3>
+        <table class="standings-table">
+          <thead>
+            <tr>
+              <th>POS</th>
+              <th>TEAM</th>
+              <th style="text-align: right;">PTS</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="pos">1</td>
+              <td>Mercedes</td>
+              <td class="pts">652</td>
+            </tr>
+            <tr>
+              <td class="pos">2</td>
+              <td>Ferrari</td>
+              <td class="pts">512</td>
+            </tr>
+            <tr>
+              <td class="pos">3</td>
+              <td>Red Bull Racing</td>
+              <td class="pts">415</td>
+            </tr>
+            <tr>
+              <td class="pos">4</td>
+              <td>McLaren</td>
+              <td class="pts">398</td>
+            </tr>
+            <tr>
+              <td class="pos">5</td>
+              <td>Racing Bulls</td>
+              <td class="pts">112</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </aside>
+
   </div>
 
   <footer>
-    <p>&copy; 2026 F1 News Hub. Independent fan website for Formula 1 news summary.</p>
+    <p>&copy; 2026 F1 Real-Time News & Information Hub.</p>
   </footer>
 
 </body>
